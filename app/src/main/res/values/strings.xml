@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">FindingFalcon</string>
-    <string name="select_spaceship">Select spaceship</string>
+    <string name="select_vehicle">Select vehicle</string>
 </resources>

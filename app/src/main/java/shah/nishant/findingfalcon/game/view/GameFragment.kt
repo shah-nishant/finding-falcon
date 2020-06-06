@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.Lazy
 import dagger.android.support.AndroidSupportInjection
@@ -36,6 +37,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
+        initObservers()
+        viewModel.init()
     }
 
     private fun setUpRecyclerView() {
@@ -43,6 +46,12 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             layoutManager = LinearLayoutManager(context)
             adapter = planetAdapter
         }
+    }
+
+    private fun initObservers() {
+        viewModel.gameMetaData.observe(viewLifecycleOwner, Observer {
+            planetAdapter.setPlanets(it.planets)
+        })
     }
 
 }
