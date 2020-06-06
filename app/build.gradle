@@ -31,8 +31,9 @@ android {
 }
 
 ext.versions = [
-        dagger   : '2.22.1',
-        lifecycle: '2.2.0',
+        dagger    : '2.22.1',
+        lifecycle : '2.2.0',
+        navigation: '2.2.2'
 ]
 
 dependencies {
@@ -52,6 +53,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
+
+    implementation "androidx.navigation:navigation-fragment:$versions.navigation"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$versions.navigation"
+    implementation "androidx.navigation:navigation-ui:$versions.navigation"
+    implementation "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
 
     testImplementation 'junit:junit:4.13'
 
