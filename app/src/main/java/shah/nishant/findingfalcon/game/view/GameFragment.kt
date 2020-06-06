@@ -10,9 +10,7 @@ import dagger.Lazy
 import dagger.android.support.AndroidSupportInjection
 import shah.nishant.findingfalcon.R
 import shah.nishant.findingfalcon.databinding.GameFragmentBinding
-import shah.nishant.findingfalcon.extensions.createViewModel
-import shah.nishant.findingfalcon.extensions.navigate
-import shah.nishant.findingfalcon.extensions.viewLifecycleScoped
+import shah.nishant.findingfalcon.extensions.*
 import shah.nishant.findingfalcon.game.viewmodel.GameViewModel
 import shah.nishant.findingfalcon.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -52,6 +50,10 @@ class GameFragment : Fragment(R.layout.game_fragment) {
     private fun initObservers() {
         viewModel.gameMetaData.observe(viewLifecycleOwner, Observer {
             planetAdapter.setPlanets(it.planets)
+            binding.apply {
+                successViews.visible()
+                progressBar.gone()
+            }
         })
     }
 

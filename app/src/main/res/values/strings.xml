@@ -6,4 +6,6 @@
     <string name="select_vehicle_for_king_shan">Select vehicle for King Shan</string>
     <string name="vehicle_name">%1$s (%2$s)</string>
     <string name="vehicle_details">Max distance: %1$s megamiles, speed %2$s megamiles/hour</string>
+    <string name="retry">Retry</string>
+    <string name="load_failure">Failed to load game</string>
 </resources>
