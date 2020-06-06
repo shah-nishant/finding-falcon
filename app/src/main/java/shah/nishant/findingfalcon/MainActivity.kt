@@ -1,4 +1,4 @@
-package shah.nishant.findingfalcon.game.view
+package shah.nishant.findingfalcon
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
