@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.Lazy
 import dagger.android.support.AndroidSupportInjection
 import shah.nishant.findingfalcon.R
-import shah.nishant.findingfalcon.databinding.FragmentGameBinding
+import shah.nishant.findingfalcon.databinding.GameFragmentBinding
 import shah.nishant.findingfalcon.extensions.createViewModel
+import shah.nishant.findingfalcon.extensions.navigate
 import shah.nishant.findingfalcon.extensions.viewLifecycleScoped
 import shah.nishant.findingfalcon.game.viewmodel.GameViewModel
 import shah.nishant.findingfalcon.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
-class GameFragment : Fragment(R.layout.fragment_game) {
+class GameFragment : Fragment(R.layout.game_fragment) {
 
-    private val binding: FragmentGameBinding by viewLifecycleScoped(FragmentGameBinding::bind)
+    private val binding: GameFragmentBinding by viewLifecycleScoped(GameFragmentBinding::bind)
 
     @Inject
     lateinit var viewModelFactory: Lazy<ViewModelFactory>
@@ -27,7 +28,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         createViewModel<GameViewModel>(viewModelFactory.get())
     }
 
-    private val planetAdapter = PlanetListAdapter()
+    private val planetAdapter = PlanetAdapter(this::selectVehicle)
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -52,6 +53,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         viewModel.gameMetaData.observe(viewLifecycleOwner, Observer {
             planetAdapter.setPlanets(it.planets)
         })
+    }
+
+    private fun selectVehicle(name: String?) {
+        navigate(GameFragmentDirections.selectVehicle(viewModel.gameMetaData.value!!.vehicles.toTypedArray()))
     }
 
 }

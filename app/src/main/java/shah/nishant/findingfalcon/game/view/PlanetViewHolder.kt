@@ -2,11 +2,13 @@ package shah.nishant.findingfalcon.game.view
 
 import androidx.recyclerview.widget.RecyclerView
 import shah.nishant.findingfalcon.R
-import shah.nishant.findingfalcon.databinding.LayoutPlanetBinding
+import shah.nishant.findingfalcon.databinding.PlanetLayoutBinding
 import shah.nishant.findingfalcon.game.model.Planet
 
-class PlanetViewHolder constructor(private val binding: LayoutPlanetBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class PlanetViewHolder constructor(
+    private val binding: PlanetLayoutBinding,
+    private val selectVehicle: (String?) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         private val PLANET_DRAWABLES = arrayOf(
@@ -23,6 +25,7 @@ class PlanetViewHolder constructor(private val binding: LayoutPlanetBinding) :
             name.text = planet.name
             distance.text = distance.context.getString(R.string.distance, planet.distance)
             photo.setImageResource(PLANET_DRAWABLES.random())
+            selectVehicle.setOnClickListener { selectVehicle(planet.name) }
         }
     }
 

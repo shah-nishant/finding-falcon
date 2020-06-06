@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="5"
-        tools:listitem="@layout/layout_planet" />
+        tools:listitem="@layout/planet_layout" />
 
     <Button
         android:id="@+id/find"

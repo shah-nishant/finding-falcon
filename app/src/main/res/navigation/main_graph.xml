@@ -3,13 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/game">
 
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/game"
         android:name="shah.nishant.findingfalcon.game.view.GameFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/game_fragment">
+        <action
+            android:id="@+id/select_vehicle"
+            app:destination="@id/vehicle" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/vehicle"
+        android:name="shah.nishant.findingfalcon.game.view.VehicleBottomSheet"
+        android:label="VehicleBottomSheet"
+        tools:layout="@layout/vehicle_bottom_sheet">
+
+        <argument
+            android:name="vehicles"
+            app:argType="shah.nishant.findingfalcon.game.model.Vehicle[]" />
+
+    </dialog>
 
 </navigation>

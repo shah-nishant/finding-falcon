@@ -3,4 +3,7 @@
     <string name="select_vehicle">Select vehicle</string>
     <string name="distance">%1$s miles</string>
     <string name="find_falcone">Find Falcone</string>
+    <string name="select_vehicle_for_king_shan">Select vehicle for King Shan</string>
+    <string name="vehicle_name">%1$s (%2$s)</string>
+    <string name="vehicle_details">Max distance: %1$s megamiles, speed %2$s megamiles/hour</string>
 </resources>

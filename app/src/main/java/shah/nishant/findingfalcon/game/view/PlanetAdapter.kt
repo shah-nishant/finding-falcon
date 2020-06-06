@@ -3,10 +3,10 @@ package shah.nishant.findingfalcon.game.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import shah.nishant.findingfalcon.databinding.LayoutPlanetBinding
+import shah.nishant.findingfalcon.databinding.PlanetLayoutBinding
 import shah.nishant.findingfalcon.game.model.Planet
 
-class PlanetListAdapter : RecyclerView.Adapter<PlanetViewHolder>() {
+class PlanetAdapter constructor(private val selectVehicle: (String?) -> Unit) : RecyclerView.Adapter<PlanetViewHolder>() {
 
     private val planets = mutableListOf<Planet>()
 
@@ -19,8 +19,8 @@ class PlanetListAdapter : RecyclerView.Adapter<PlanetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
         val binding =
-            LayoutPlanetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PlanetViewHolder(binding)
+            PlanetLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PlanetViewHolder(binding, selectVehicle)
     }
 
     override fun getItemCount() = planets.size
