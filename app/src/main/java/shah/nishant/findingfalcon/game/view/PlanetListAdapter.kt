@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import shah.nishant.findingfalcon.databinding.LayoutPlanetBinding
 import shah.nishant.findingfalcon.game.model.Planet
 
-class PlanetListAdapter: RecyclerView.Adapter<PlanetViewHolder>() {
+class PlanetListAdapter : RecyclerView.Adapter<PlanetViewHolder>() {
 
     private val planets = mutableListOf<Planet>()
 
@@ -18,7 +18,8 @@ class PlanetListAdapter: RecyclerView.Adapter<PlanetViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
-        val binding = LayoutPlanetBinding.inflate(LayoutInflater.from(parent.context))
+        val binding =
+            LayoutPlanetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PlanetViewHolder(binding)
     }
 
