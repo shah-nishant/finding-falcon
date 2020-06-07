@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Finding Falcon</string>
+    <string name="app_name">Finding Falcone</string>
     <string name="select_vehicle">Select vehicle</string>
     <string name="distance">%1$s miles</string>
     <string name="find_falcone">Find Falcone</string>

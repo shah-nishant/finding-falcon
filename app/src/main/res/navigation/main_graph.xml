@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/game"
-        android:name="shah.nishant.findingfalcon.game.view.GameFragment"
+        android:name="shah.nishant.findingfalcone.game.view.GameFragment"
         android:label="MainFragment"
         tools:layout="@layout/game_fragment">
         <action
@@ -18,13 +18,13 @@
 
     <dialog
         android:id="@+id/vehicle"
-        android:name="shah.nishant.findingfalcon.game.view.VehicleBottomSheet"
+        android:name="shah.nishant.findingfalcone.game.view.VehicleBottomSheet"
         android:label="VehicleBottomSheet"
         tools:layout="@layout/vehicle_bottom_sheet">
 
         <argument
             android:name="target"
-            app:argType="shah.nishant.findingfalcon.game.model.Target" />
+            app:argType="shah.nishant.findingfalcone.game.model.Target" />
 
     </dialog>
 
