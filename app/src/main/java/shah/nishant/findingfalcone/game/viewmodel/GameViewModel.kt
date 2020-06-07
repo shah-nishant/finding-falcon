@@ -5,10 +5,8 @@ import dagger.Lazy
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import shah.nishant.findingfalcone.game.data.GameRepository
-import shah.nishant.findingfalcone.game.model.GameMetaData
-import shah.nishant.findingfalcone.game.model.Planet
+import shah.nishant.findingfalcone.game.model.*
 import shah.nishant.findingfalcone.game.model.Target
-import shah.nishant.findingfalcone.game.model.Vehicle
 import javax.inject.Inject
 
 class GameViewModel @Inject constructor(
@@ -17,6 +15,9 @@ class GameViewModel @Inject constructor(
 
     private val _gameMetaData = MutableLiveData<GameMetaData>()
     val gameMetaData: LiveData<GameMetaData> = _gameMetaData
+
+    private val _findResponse = MutableLiveData<FindResponse>()
+    val findResponse: LiveData<FindResponse> = _findResponse
 
     fun init() {
         viewModelScope.launch {
@@ -61,7 +62,14 @@ class GameViewModel @Inject constructor(
     }
 
     fun findFalcone() {
-        gameRepository.get().findFalcone()
+        viewModelScope.launch {
+            val selectedTargets = gameMetaData.value!!.targets.filter {
+                it.vehicle != null
+            }
+            val planetNames = selectedTargets.map { it.planet.name!! }
+            val vehicleNames = selectedTargets.map { it.vehicle!!.name!! }
+            _findResponse.postValue(gameRepository.get().findFalcone(planetNames, vehicleNames))
+        }
     }
 
 }

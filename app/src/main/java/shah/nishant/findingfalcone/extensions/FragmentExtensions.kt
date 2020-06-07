@@ -10,3 +10,5 @@ fun Fragment.navigate(directions: NavDirections) {
 }
 
 fun Fragment.showShortToast(@StringRes resId: Int) = context?.showShortToast(resId)
+
+fun Fragment.showShortToast(message: String) = context?.showShortToast(message)

@@ -3,6 +3,7 @@ package shah.nishant.findingfalcone.game.data
 import dagger.Lazy
 import kotlinx.coroutines.withContext
 import shah.nishant.findingfalcone.coroutines.DispatcherProvider
+import shah.nishant.findingfalcone.game.model.FindRequest
 import javax.inject.Inject
 
 class GameRepository @Inject constructor(
@@ -18,8 +19,12 @@ class GameRepository @Inject constructor(
         remoteDataSource.get().getVehicles()
     }
 
-    fun findFalcone() {
-
-    }
+    suspend fun findFalcone(planetNames: List<String>, vehicleNames: List<String>) =
+        withContext(dispatcherProvider.get().io()) {
+            val findRequest = FindRequest(
+                remoteDataSource.get().getToken().token!!, planetNames, vehicleNames
+            )
+            remoteDataSource.get().findFalcone(findRequest)
+        }
 
 }

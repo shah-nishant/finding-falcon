@@ -1,8 +1,10 @@
 package shah.nishant.findingfalcone.game.data
 
+import retrofit2.http.Body
 import retrofit2.http.GET
-import shah.nishant.findingfalcone.game.model.Planet
-import shah.nishant.findingfalcone.game.model.Vehicle
+import retrofit2.http.Headers
+import retrofit2.http.POST
+import shah.nishant.findingfalcone.game.model.*
 
 interface GameApi {
 
@@ -11,4 +13,12 @@ interface GameApi {
 
     @GET("vehicles")
     suspend fun getVehicles(): List<Vehicle>
+
+    @Headers("Accept: application/json")
+    @POST("token")
+    suspend fun getToken(): TokenResponse
+
+    @Headers("Accept: application/json")
+    @POST("find")
+    suspend fun findFalcone(@Body findRequest: FindRequest): FindResponse
 }

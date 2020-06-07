@@ -52,11 +52,23 @@ class GameFragment : Fragment(R.layout.game_fragment) {
     }
 
     private fun initObservers() {
+        // Load observer
         viewModel.gameMetaData.observe(viewLifecycleOwner, Observer {
             planetAdapter.setTargets(it.targets)
             binding.apply {
                 successViews.visible()
                 progressBar.gone()
+            }
+        })
+
+        // Find observer
+        viewModel.findResponse.observe(viewLifecycleOwner, Observer {
+            if (it.isSuccessful()) {
+                showShortToast(R.string.win_message)
+            } else if (!it.error.isNullOrBlank()) {
+                showShortToast(it.error)
+            } else {
+                showShortToast(R.string.lose_message)
             }
         })
     }

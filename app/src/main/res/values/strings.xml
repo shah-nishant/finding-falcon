@@ -10,4 +10,8 @@
     <string name="load_failure">Failed to load game</string>
     <string name="remove">Remove</string>
     <string name="select_vehicle_failure">You can\'t select more than for 4 planets</string>
+    <string name="win_title">You won!</string>
+    <string name="win_message">Congratulations on Finding Falcone. King Shan is mighty pleased. Falcone has been found on %1$s planet</string>
+    <string name="lose_title">You lost!</string>
+    <string name="lose_message">Don\'t be sad, you can retry by clicking "Play again" button</string>
 </resources>
