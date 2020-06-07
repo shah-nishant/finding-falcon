@@ -11,11 +11,11 @@ class GameRepository @Inject constructor(
     private val dispatcherProvider: Lazy<DispatcherProvider>
 ) {
 
-    suspend fun getGetPlanets() = withContext(dispatcherProvider.get().io()) {
+    suspend fun getPlanets() = withContext(dispatcherProvider.get().io()) {
         remoteDataSource.get().getPlanets()
     }
 
-    suspend fun getGetVehicle() = withContext(dispatcherProvider.get().io()) {
+    suspend fun getVehicle() = withContext(dispatcherProvider.get().io()) {
         remoteDataSource.get().getVehicles()
     }
 

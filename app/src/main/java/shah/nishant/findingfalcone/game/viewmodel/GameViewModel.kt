@@ -35,8 +35,8 @@ class GameViewModel @Inject constructor(
 
     fun init() {
         viewModelScope.launch(exceptionHandler) {
-            val planets = async { gameRepository.get().getGetPlanets() }
-            val vehicles = async { gameRepository.get().getGetVehicle() }
+            val planets = async { gameRepository.get().getPlanets() }
+            val vehicles = async { gameRepository.get().getVehicle() }
 
             // Run APIs in parallel
             try {
