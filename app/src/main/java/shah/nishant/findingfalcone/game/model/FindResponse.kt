@@ -11,5 +11,5 @@ data class FindResponse(
     val planeName: String?,
     val error: String?
 ) : Parcelable {
-    fun isSuccessful() = status == "success" && planeName.isNullOrBlank()
+    fun isSuccessful() = status == "success" && !planeName.isNullOrBlank()
 }

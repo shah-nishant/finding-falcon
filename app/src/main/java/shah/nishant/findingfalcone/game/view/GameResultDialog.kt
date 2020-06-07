@@ -35,7 +35,7 @@ class GameResultDialog : DialogFragment() {
             binding.apply {
                 result.setImageResource(R.drawable.win)
                 title.setText(R.string.win_title)
-                message.setText(R.string.win_message)
+                message.text = getString(R.string.win_message, args.response.planeName)
             }
         } else {
             binding.apply {
