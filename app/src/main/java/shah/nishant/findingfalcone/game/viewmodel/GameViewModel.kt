@@ -20,7 +20,7 @@ class GameViewModel @Inject constructor(
     private val gameRepository: Lazy<GameRepository>
 ) : ViewModel() {
 
-    val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         println("Caught $exception")
     }
 
