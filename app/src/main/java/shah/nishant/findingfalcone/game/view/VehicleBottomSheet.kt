@@ -63,6 +63,7 @@ class VehicleBottomSheet : BottomSheetDialogFragment() {
         binding.vehicleList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = VehicleAdapter(
+                args.target,
                 viewModel.gameMetaData.value!!.vehicles,
                 this@VehicleBottomSheet::onVehicleSelected
             )

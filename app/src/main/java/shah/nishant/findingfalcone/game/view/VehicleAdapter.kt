@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import shah.nishant.findingfalcone.databinding.VehicleLayoutBinding
+import shah.nishant.findingfalcone.game.model.Target
 import shah.nishant.findingfalcone.game.model.Vehicle
 
 class VehicleAdapter constructor(
+    private val target: Target,
     private val vehicles: List<Vehicle>,
     private val onVehicleSelected: (Vehicle) -> Unit
 ) : RecyclerView.Adapter<VehicleViewHolder>() {
@@ -20,7 +22,8 @@ class VehicleAdapter constructor(
     override fun getItemCount() = vehicles.size
 
     override fun onBindViewHolder(holder: VehicleViewHolder, position: Int) {
-        holder.bind(vehicles[position])
+        val vehicle = vehicles[position]
+        holder.bind(vehicle, target.vehicle == vehicle)
     }
 
 }
