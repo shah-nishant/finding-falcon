@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 @Keep
 @Parcelize
-data class Planet(val name: String?, val distance: String?) : Parcelable
+data class Planet(val name: String?, val distance: Long?) : Parcelable

@@ -72,4 +72,12 @@ class GameViewModel @Inject constructor(
         }
     }
 
+    fun getVehiclesDto(planet: Planet): List<VehicleDto> {
+        return gameMetaData.value!!.vehicles.map { vehicle ->
+            val used = gameMetaData.value!!.targets.filter { it.vehicle == vehicle }.size
+            val available = vehicle.count!! - used
+            VehicleDto(vehicle, available, planet.distance!! <= vehicle.distance!!)
+        }
+    }
+
 }
