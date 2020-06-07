@@ -19,14 +19,18 @@ class GameRemoteDataSourceTest {
     fun `should return the value returned by the getPlanets method of api `() {
         runBlocking {
             //given
-            val list = listOf<Planet>(mock(), mock(), mock())
-            whenever(api.getPlanets()).thenReturn(list)
+            val planets = listOf(
+                Planet("A", 100),
+                Planet("B", 200),
+                Planet("C", 300)
+            )
+            whenever(api.getPlanets()).thenReturn(planets)
 
             //when
             val result = gameRemoteDataSource.getPlanets()
 
             //then
-            assertThat(result).isEqualTo(list)
+            assertThat(result).isEqualTo(planets)
         }
     }
 
@@ -34,14 +38,18 @@ class GameRemoteDataSourceTest {
     fun `should return the value returned by the getVehicles method of api `() {
         runBlocking {
             //given
-            val list = listOf<Vehicle>(mock(), mock(), mock())
-            whenever(api.getVehicles()).thenReturn(list)
+            val vehicles = listOf(
+                Vehicle("A", 1, 100, 2),
+                Vehicle("B", 2, 200, 3),
+                Vehicle("C", 3, 300, 4)
+            )
+            whenever(api.getVehicles()).thenReturn(vehicles)
 
             //when
             val result = gameRemoteDataSource.getVehicles()
 
             //then
-            assertThat(result).isEqualTo(list)
+            assertThat(result).isEqualTo(vehicles)
         }
     }
 
@@ -49,7 +57,7 @@ class GameRemoteDataSourceTest {
     fun `should return the value returned by the getToken method of api `() {
         runBlocking {
             //given
-            val token = mock<TokenResponse>()
+            val token = TokenResponse("token")
             whenever(api.getToken()).thenReturn(token)
 
             //when
@@ -64,16 +72,25 @@ class GameRemoteDataSourceTest {
     fun `should return the value returned by the findFalcone method of api `() {
         runBlocking {
             //given
-            val request = mock<FindRequest>()
-            val response = mock<Response<FindResponse>>()
-            whenever(api.findFalcone(request)).thenReturn(response)
+            val planets = listOf("Planet A", "Planet B", "Planet C")
+            val vehicles = listOf("Vehicle A", "Vehicle B", "Vehicle C")
+            val tokenResponse = TokenResponse("token")
+            val findRequest = FindRequest("token", planets, vehicles)
+            val findResponse = Response.success<FindResponse>(
+                FindResponse(
+                    "success",
+                    "earth",
+                    null
+                )
+            )
+            whenever(api.findFalcone(findRequest)).thenReturn(findResponse)
 
             //when
-            val result = gameRemoteDataSource.findFalcone(request)
+            val result = gameRemoteDataSource.findFalcone(findRequest)
 
             //then
-            verify(api).findFalcone(request)
-            assertThat(result).isEqualTo(response)
+            verify(api).findFalcone(findRequest)
+            assertThat(result).isEqualTo(findResponse)
         }
     }
 }

@@ -2,12 +2,11 @@ package shah.nishant.findingfalcone.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 
-class DispatcherProvider @Inject constructor() {
+interface DispatcherProvider {
 
-    fun main(): CoroutineDispatcher = Dispatchers.Main
+    fun main(): CoroutineDispatcher
 
-    fun io(): CoroutineDispatcher = Dispatchers.IO
+    fun io(): CoroutineDispatcher
 
 }

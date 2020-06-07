@@ -1,5 +1,6 @@
 package shah.nishant.findingfalcone.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -10,6 +11,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import shah.nishant.findingfalcone.BuildConfig
 import shah.nishant.findingfalcone.MainActivity
+import shah.nishant.findingfalcone.coroutines.DispatcherProvider
+import shah.nishant.findingfalcone.coroutines.DispatcherProviderImpl
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -17,6 +20,9 @@ abstract class ApplicationModule {
 
     @ContributesAndroidInjector
     abstract fun mainActivity(): MainActivity
+
+    @Binds
+    abstract fun dispatcherProvider(dispatcherProviderImpl: DispatcherProviderImpl): DispatcherProvider
 
     @Module
     companion object {
@@ -49,7 +55,8 @@ abstract class ApplicationModule {
 
         @Provides
         @JvmStatic
-        fun provideRetrofitBase(okHttpClient: OkHttpClient, converterFactory: GsonConverterFactory
+        fun provideRetrofitBase(
+            okHttpClient: OkHttpClient, converterFactory: GsonConverterFactory
         ): Retrofit {
             return Retrofit.Builder()
                 .baseUrl("https://findfalcone.herokuapp.com/")
