@@ -9,4 +9,5 @@
     <color name="orange">#E46740</color>
     <color name="green">#1C873B</color>
     <color name="disabled_color">#565656</color>
+    <color name="opaque_background">#3F000000</color>
 </resources>

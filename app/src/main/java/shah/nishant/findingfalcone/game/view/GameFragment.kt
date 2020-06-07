@@ -42,6 +42,7 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         initObservers()
         binding.find.setOnClickListener {
             if (viewModel.isSelectionComplete()) {
+                binding.progressBar.root.visible()
                 viewModel.findFalcone()
             } else {
                 showShortToast(R.string.incomplete_selection)
@@ -63,13 +64,14 @@ class GameFragment : Fragment(R.layout.game_fragment) {
             planetAdapter.setTargets(it.targets)
             binding.apply {
                 successViews.visible()
-                progressBar.gone()
+                progressBar.root.gone()
             }
         })
 
         // Find observer
         viewModel.findResponse.observe(viewLifecycleOwner, Observer {
             if (it.error.isNullOrBlank()) {
+                binding.progressBar.root.gone()
                 navigate(GameFragmentDirections.showResult(it))
             } else {
                 showShortToast(it.error)
