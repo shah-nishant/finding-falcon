@@ -1,9 +1,16 @@
 package shah.nishant.findingfalcone.game.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.Lazy
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import shah.nishant.findingfalcone.coroutines.Result
+import shah.nishant.findingfalcone.coroutines.toResult
 import shah.nishant.findingfalcone.game.data.GameRepository
 import shah.nishant.findingfalcone.game.model.*
 import shah.nishant.findingfalcone.game.model.Target
@@ -13,23 +20,38 @@ class GameViewModel @Inject constructor(
     private val gameRepository: Lazy<GameRepository>
 ) : ViewModel() {
 
+    val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        println("Caught $exception")
+    }
+
     private val _gameMetaData = MutableLiveData<GameMetaData>()
     val gameMetaData: LiveData<GameMetaData> = _gameMetaData
 
-    private val _findResponse = MutableLiveData<FindResponse>()
-    val findResponse: LiveData<FindResponse> = _findResponse
+    private val _loadError = MutableLiveData<Boolean>()
+    val loadError: LiveData<Boolean> = _loadError
+
+    private val _findResponse = MutableLiveData<Result<FindResponse>>()
+    val findResponse: LiveData<Result<FindResponse>> = _findResponse
 
     fun init() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val planets = async { gameRepository.get().getGetPlanets() }
             val vehicles = async { gameRepository.get().getGetVehicle() }
 
             // Run APIs in parallel
-            val gameMetaData = GameMetaData(
-                planets.await().map { Target(it) },
-                vehicles.await()
-            )
-            _gameMetaData.postValue(gameMetaData)
+            try {
+                val gameMetaData = GameMetaData(
+                    planets.await().map { Target(it) },
+                    vehicles.await()
+                )
+                _loadError.postValue(false)
+                _gameMetaData.postValue(gameMetaData)
+            } catch (t: Throwable) {
+                if (t !is CancellationException) {
+                    _loadError.postValue(true)
+                }
+            }
+
         }
     }
 
@@ -62,13 +84,24 @@ class GameViewModel @Inject constructor(
     }
 
     fun findFalcone() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val selectedTargets = gameMetaData.value!!.targets.filter {
                 it.vehicle != null
             }
             val planetNames = selectedTargets.map { it.planet.name!! }
             val vehicleNames = selectedTargets.map { it.vehicle!!.name!! }
-            _findResponse.postValue(gameRepository.get().findFalcone(planetNames, vehicleNames))
+            try {
+                val response = gameRepository.get().findFalcone(planetNames, vehicleNames)
+                if (response.isSuccessful && response.body() != null) {
+                    _findResponse.postValue(Result.Success(response.body()!!))
+                } else {
+                    _findResponse.postValue(Result.Failure(response.errorBody()?.string()))
+                }
+            } catch (t: Throwable) {
+                if (t !is CancellationException) {
+                    _findResponse.value = t.toResult()
+                }
+            }
         }
     }
 

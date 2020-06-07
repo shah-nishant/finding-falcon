@@ -1,5 +1,6 @@
 package shah.nishant.findingfalcone.game.data
 
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -20,5 +21,5 @@ interface GameApi {
 
     @Headers("Accept: application/json")
     @POST("find")
-    suspend fun findFalcone(@Body findRequest: FindRequest): FindResponse
+    suspend fun findFalcone(@Body findRequest: FindRequest): Response<FindResponse>
 }

@@ -17,4 +17,6 @@
     <string name="play_again">Play again</string>
     <string name="incomplete_selection">Please select 4 planets</string>
     <string name="time_taken">Time taken: %1$s hours</string>
+    <string name="find_failure">Something went wrong. Please try again</string>
+    <string name="no_internet">Please check your internet connection</string>
 </resources>

@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.Lazy
 import dagger.android.support.AndroidSupportInjection
 import shah.nishant.findingfalcone.R
+import shah.nishant.findingfalcone.coroutines.Result
+import shah.nishant.findingfalcone.coroutines.getValue
 import shah.nishant.findingfalcone.databinding.GameFragmentBinding
 import shah.nishant.findingfalcone.extensions.*
+import shah.nishant.findingfalcone.game.model.FindResponse
 import shah.nishant.findingfalcone.game.model.Target
 import shah.nishant.findingfalcone.game.viewmodel.GameViewModel
 import shah.nishant.findingfalcone.viewmodel.ViewModelFactory
@@ -41,14 +44,38 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         setUpRecyclerView()
         initObservers()
         binding.find.setOnClickListener {
-            if (viewModel.isSelectionComplete()) {
-                binding.progressBar.root.visible()
-                viewModel.findFalcone()
+            if (isConnectedToInternet()) {
+                findFalcone()
             } else {
-                showShortToast(R.string.incomplete_selection)
+                showShortToast(R.string.no_internet)
             }
         }
-        viewModel.init()
+
+        binding.retry.setOnClickListener { loadGameMetaData() }
+        loadGameMetaData()
+    }
+
+    private fun findFalcone() {
+        if (viewModel.isSelectionComplete()) {
+            binding.progressBar.root.visible()
+            viewModel.findFalcone()
+        } else {
+            showShortToast(R.string.incomplete_selection)
+        }
+    }
+
+    private fun loadGameMetaData() {
+        if (isConnectedToInternet()) {
+            binding.apply {
+                successViews.gone()
+                errorViews.gone()
+                progressBar.root.visible()
+            }
+            viewModel.init()
+        } else {
+            onLoadError()
+            showShortToast(R.string.no_internet)
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -63,20 +90,44 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         viewModel.gameMetaData.observe(viewLifecycleOwner, Observer {
             planetAdapter.setTargets(it.targets)
             binding.apply {
+                errorViews.gone()
                 successViews.visible()
                 progressBar.root.gone()
             }
         })
 
-        // Find observer
-        viewModel.findResponse.observe(viewLifecycleOwner, Observer {
-            if (it.error.isNullOrBlank()) {
-                binding.progressBar.root.gone()
-                navigate(GameFragmentDirections.showResult(it))
-            } else {
-                showShortToast(it.error)
+        //Load error observer
+        viewModel.loadError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                onLoadError()
             }
         })
+
+        // Find observer
+        viewModel.findResponse.observe(viewLifecycleOwner, Observer {
+            if (it?.isSuccessful() == true) {
+                handleFindResult(it)
+            } else {
+                showShortToast(R.string.find_failure)
+            }
+        })
+    }
+
+    private fun onLoadError() {
+        binding.apply {
+            successViews.gone()
+            progressBar.root.gone()
+            errorViews.visible()
+        }
+    }
+
+    private fun handleFindResult(result: Result<FindResponse>) {
+        if (result.getValue()?.error.isNullOrBlank()) {
+            binding.progressBar.root.gone()
+            navigate(GameFragmentDirections.showResult(result.getValue()!!))
+        } else {
+            showShortToast(result.getValue()?.error!!)
+        }
     }
 
     private fun selectVehicle(target: Target) {
