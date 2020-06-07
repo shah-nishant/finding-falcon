@@ -7,4 +7,5 @@
     <color name="gray">#BBB9BA</color>
     <color name="white">@android:color/white</color>
     <color name="orange">#E46740</color>
+    <color name="green">#1C873B</color>
 </resources>

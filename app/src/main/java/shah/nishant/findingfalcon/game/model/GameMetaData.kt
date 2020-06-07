@@ -1,5 +1,3 @@
 package shah.nishant.findingfalcon.game.model
 
-import androidx.annotation.Keep
-
-data class GameMetaData(val planets: List<Planet>, val vehicles: List<Vehicle>)
+data class GameMetaData(val targets: List<Target>, val vehicles: List<Vehicle>)

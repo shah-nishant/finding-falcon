@@ -11,6 +11,7 @@ import dagger.android.support.AndroidSupportInjection
 import shah.nishant.findingfalcon.R
 import shah.nishant.findingfalcon.databinding.GameFragmentBinding
 import shah.nishant.findingfalcon.extensions.*
+import shah.nishant.findingfalcon.game.model.Planet
 import shah.nishant.findingfalcon.game.viewmodel.GameViewModel
 import shah.nishant.findingfalcon.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -26,7 +27,7 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         createViewModel<GameViewModel>(viewModelFactory.get())
     }
 
-    private val planetAdapter = PlanetAdapter(this::selectVehicle)
+    private val planetAdapter = TargetAdapter(this::selectVehicle)
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -49,7 +50,7 @@ class GameFragment : Fragment(R.layout.game_fragment) {
 
     private fun initObservers() {
         viewModel.gameMetaData.observe(viewLifecycleOwner, Observer {
-            planetAdapter.setPlanets(it.planets)
+            planetAdapter.setTargets(it.targets)
             binding.apply {
                 successViews.visible()
                 progressBar.gone()
@@ -57,7 +58,7 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         })
     }
 
-    private fun selectVehicle(name: String?) {
+    private fun selectVehicle(planet: Planet) {
         navigate(GameFragmentDirections.selectVehicle(viewModel.gameMetaData.value!!.vehicles.toTypedArray()))
     }
 
