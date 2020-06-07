@@ -18,10 +18,6 @@ class GameViewModel @Inject constructor(
     private val _gameMetaData = MutableLiveData<GameMetaData>()
     val gameMetaData: LiveData<GameMetaData> = _gameMetaData
 
-    val vehicles = Transformations.map(gameMetaData) {
-        it.vehicles
-    }
-
     fun init() {
         viewModelScope.launch {
             val planets = async { gameRepository.get().getGetPlanets() }
@@ -51,9 +47,10 @@ class GameViewModel @Inject constructor(
 
     fun onVehicleRemoved(planet: Planet) {
         val updatedTargets = gameMetaData.value!!.targets.toMutableList()
-        updatedTargets.removeAll {
+        val indexForPlanet = updatedTargets.indexOfFirst {
             it.planet == planet
         }
+        updatedTargets[indexForPlanet] = Target(planet, null)
         _gameMetaData.value = _gameMetaData.value!!.copy(targets = updatedTargets)
     }
 

@@ -1,3 +1,7 @@
 package shah.nishant.findingfalcon.game.model
 
-data class Target(val planet: Planet, val vehicle: Vehicle? = null)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Target(val planet: Planet, val vehicle: Vehicle? = null) : Parcelable

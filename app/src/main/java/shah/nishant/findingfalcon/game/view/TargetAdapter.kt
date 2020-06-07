@@ -4,10 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import shah.nishant.findingfalcon.databinding.TargetLayoutBinding
-import shah.nishant.findingfalcon.game.model.Planet
 import shah.nishant.findingfalcon.game.model.Target
 
-class TargetAdapter constructor(private val selectVehicle: (Planet) -> Unit) : RecyclerView.Adapter<TargetViewHolder>() {
+class TargetAdapter constructor(private val selectVehicle: (Target) -> Unit) : RecyclerView.Adapter<TargetViewHolder>() {
 
     private val targets = mutableListOf<Target>()
 

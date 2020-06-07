@@ -9,6 +9,7 @@ import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 import shah.nishant.findingfalcon.game.data.GameApi
 import shah.nishant.findingfalcon.game.view.GameFragment
+import shah.nishant.findingfalcon.game.view.VehicleBottomSheet
 import shah.nishant.findingfalcon.game.viewmodel.GameViewModel
 import shah.nishant.findingfalcon.viewmodel.ViewModelKey
 
@@ -17,6 +18,9 @@ abstract class GameModule {
 
     @ContributesAndroidInjector
     abstract fun gameFragment(): GameFragment
+
+    @ContributesAndroidInjector
+    abstract fun vehicleBottomSheet(): VehicleBottomSheet
 
     @Binds
     @IntoMap

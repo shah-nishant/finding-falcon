@@ -23,8 +23,8 @@
         tools:layout="@layout/vehicle_bottom_sheet">
 
         <argument
-            android:name="vehicles"
-            app:argType="shah.nishant.findingfalcon.game.model.Vehicle[]" />
+            android:name="target"
+            app:argType="shah.nishant.findingfalcon.game.model.Target" />
 
     </dialog>
 

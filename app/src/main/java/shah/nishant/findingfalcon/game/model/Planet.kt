@@ -1,6 +1,9 @@
 package shah.nishant.findingfalcon.game.model
 
+import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.android.parcel.Parcelize
 
 @Keep
-data class Planet(val name: String?, val distance: String?)
+@Parcelize
+data class Planet(val name: String?, val distance: String?) : Parcelable
