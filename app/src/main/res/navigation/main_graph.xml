@@ -14,6 +14,9 @@
         <action
             android:id="@+id/select_vehicle"
             app:destination="@id/vehicle" />
+        <action
+            android:id="@+id/show_result"
+            app:destination="@id/gameResultDialog" />
     </fragment>
 
     <dialog
@@ -27,5 +30,30 @@
             app:argType="shah.nishant.findingfalcone.game.model.Target" />
 
     </dialog>
+
+
+    <dialog
+        android:id="@+id/gameResultDialog"
+        android:name="shah.nishant.findingfalcone.game.view.GameResultDialog"
+        android:label="GameResultDialog"
+        tools:layout="@layout/game_result_dialog">
+
+        <argument
+            android:name="response"
+            app:argType="shah.nishant.findingfalcone.game.model.FindResponse" />
+
+        <action
+            android:id="@+id/play_again"
+            app:destination="@id/mainActivity"
+            app:popUpTo="@id/main_graph"
+            app:popUpToInclusive="true" />
+
+    </dialog>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="shah.nishant.findingfalcone.MainActivity"
+        android:label="MainActivity" />
+
 
 </navigation>

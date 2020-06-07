@@ -40,7 +40,13 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
         initObservers()
-        binding.find.setOnClickListener { viewModel.findFalcone() }
+        binding.find.setOnClickListener {
+            if (viewModel.isSelectionComplete()) {
+                viewModel.findFalcone()
+            } else {
+                showShortToast(R.string.incomplete_selection)
+            }
+        }
         viewModel.init()
     }
 
@@ -63,12 +69,10 @@ class GameFragment : Fragment(R.layout.game_fragment) {
 
         // Find observer
         viewModel.findResponse.observe(viewLifecycleOwner, Observer {
-            if (it.isSuccessful()) {
-                showShortToast(R.string.win_message)
-            } else if (!it.error.isNullOrBlank()) {
-                showShortToast(it.error)
+            if (it.error.isNullOrBlank()) {
+                navigate(GameFragmentDirections.showResult(it))
             } else {
-                showShortToast(R.string.lose_message)
+                showShortToast(it.error)
             }
         })
     }

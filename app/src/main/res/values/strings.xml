@@ -13,5 +13,7 @@
     <string name="win_title">You won!</string>
     <string name="win_message">Congratulations on Finding Falcone. King Shan is mighty pleased. Falcone has been found on %1$s planet</string>
     <string name="lose_title">You lost!</string>
-    <string name="lose_message">Don\'t be sad, you can retry by clicking "Play again" button</string>
+    <string name="lose_message">Don\'t be sad, you can retry by clicking play again button</string>
+    <string name="play_again">Play again</string>
+    <string name="incomplete_selection">Please select 4 planets</string>
 </resources>
